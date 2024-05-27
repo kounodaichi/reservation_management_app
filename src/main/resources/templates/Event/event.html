@@ -1,29 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::title}, ~{::content})">
 <head>
     <meta charset="UTF-8">
     <title>Event Management</title>
     <style>
-        body {
-            display: flex;
-        }
-        #sidebar {
-            width: 200px;
-            background-color: #f8f9fa;
-            padding: 15px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        }
-        #content {
-            flex: 1;
-            padding: 20px;
-        }
-        .menu-item {
-            margin: 10px 0;
-        }
-        .menu-item a {
-            text-decoration: none;
-            color: #007bff;
-        }
         h1 {
             text-align: center;
             color: #007bff;
@@ -84,17 +64,17 @@
             transition: background-color 0.3s ease;
         }
         button[type="submit"] {
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50;
         }
         button[type="submit"]:hover {
-            background-color: #45a049; /* Darker Green */
+            background-color: #45a049;
         }
         button.delete {
-            background-color: #ff4c4c; /* Red */
+            background-color: #ff4c4c;
             margin-left: 10px;
         }
         button.delete:hover {
-            background-color: #ff0000; /* Darker Red */
+            background-color: #ff0000;
         }
         .action-buttons {
             text-align: right;
@@ -102,15 +82,9 @@
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Menu</h2>
-        <div class="menu-item"><a th:href="@{/calendar1/calendar}">Calendar</a></div>
-        <div class="menu-item"><a th:href="@{/calendar1/events}">Events</a></div>
-    </div>
-    <div id="content">
+    <div th:fragment="content">
         <h1>Event Management System</h1>
 
-        <!-- Event Add Form -->
         <form th:action="@{/calendar1/events}" method="post">
             <h2>Add New Event</h2>
             <label for="date">Date:</label>
@@ -122,7 +96,6 @@
             <button type="submit">Add Event</button>
         </form>
 
-        <!-- Event List -->
         <h2>Event List</h2>
         <table>
             <thead>

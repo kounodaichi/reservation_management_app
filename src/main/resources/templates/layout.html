@@ -26,38 +26,15 @@
             text-decoration: none;
             color: #007bff;
         }
-        /* モーダルスタイル */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
+        .logout-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            background-color: #dc3545;
+            color: white;
             text-decoration: none;
-            cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -66,7 +43,7 @@
         <h2>Menu</h2>
         <div class="menu-item"><a th:href="@{/calendar1/calendar}">Calendar</a></div>
         <div class="menu-item"><a th:href="@{/calendar1/events}">Events</a></div>
-        <!-- 他のメニュー項目もここに追加 -->
+        <a th:href="@{/logout}" class="logout-button">Logout</a>
     </div>
     <div id="content">
         <h1 th:fragment="pageTitle">Page Title</h1>
