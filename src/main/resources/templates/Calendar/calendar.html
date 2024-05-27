@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar</title>
+    <link rel="stylesheet" th:href="@{/webjars/fullcalendar/main.min.css}" />
+    <script th:src="@{/webjars/fullcalendar/main.min.js}"></script>
+    <style>
+        body {
+            display: flex;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        #content {
+            flex: 1;
+            padding: 20px;
+        }
+        .menu-item {
+            margin: 10px 0;
+        }
+        .menu-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #eventButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        /* モーダルスタイル */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Menu</h2>
+        <div class="menu-item"><a th:href="@{/calendar1/calendar}">Calendar</a></div>
+        <div class="menu-item"><a th:href="@{/calendar1/events}">Events</a></div>
+    </div>
+    <div id="content">
+        <h1>Calendar</h1>
+        <div id="calendar"></div>
+        <button id="eventButton">Go to Event Page</button>
+
+        <!-- モーダルウィンドウ -->
+        <div id="eventModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Event Details</h2>
+                <p id="eventTitle"></p>
+                <p id="eventDescription"></p>
+                <p id="eventDate"></p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    events: '/calendar1/events/all', // イベントを取得するエンドポイント
+                    eventClick: function(info) {
+                        document.getElementById('eventTitle').textContent = 'Title: ' + info.event.title;
+                        document.getElementById('eventDescription').textContent = 'Description: ' + info.event.extendedProps.description;
+                        document.getElementById('eventDate').textContent = 'Date: ' + info.event.start.toLocaleString();
+                        document.getElementById('eventModal').style.display = 'block';
+                    }
+                });
+                calendar.render();
+
+                // Add event listener to the button
+                document.getElementById('eventButton').addEventListener('click', function() {
+                    window.location.href = '/calendar1/events'; // Change the URL to your event page path
+                });
+
+                // モーダルウィンドウの閉じるボタン
+                document.querySelector('.close').addEventListener('click', function() {
+                    document.getElementById('eventModal').style.display = 'none';
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
